@@ -9,8 +9,8 @@ import javax.persistence.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "USERS")
-public class User {
+@Entity(name = "USERS_INFO")
+public class AppUserInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class User {
     @Column(name = "EMAIL")
     private String email;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "APP_USER_ID")
     private AppUser appUser;
 

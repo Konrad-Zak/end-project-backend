@@ -1,10 +1,10 @@
 package com.kodilla.projectbackend.controller;
 
-import com.kodilla.projectbackend.domian.AppUser;
 import com.kodilla.projectbackend.domian.AppUserDto;
 import com.kodilla.projectbackend.mapper.AppUserMapper;
 import com.kodilla.projectbackend.service.AppUserDbService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +19,8 @@ public class AppUserController {
     private AppUserMapper appUserMapper;
 
     @GetMapping()
-    public List<AppUser> getAppUsers(){
-        return appUserDbService.getAllAppUsers();
+    public List<AppUserDto> getAppUsers(){
+        return appUserMapper.mapToAppUserDtoList(appUserDbService.getAllAppUsers());
     }
 
     @PostMapping("/create")
@@ -34,9 +34,12 @@ public class AppUserController {
         appUserDbService.deleteAppUser(appUserId);
     }
 
-    @GetMapping(value = "/v")
-    public String show(){
-        return "Hello";
+    @GetMapping("/find")
+    public UserDetails getAppUser(@RequestParam String username){
+        return appUserDbService.loadUserByUsername(username);
     }
+
+
+
 
 }

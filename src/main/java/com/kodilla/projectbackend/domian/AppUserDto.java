@@ -2,6 +2,7 @@ package com.kodilla.projectbackend.domian;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
 @AllArgsConstructor
