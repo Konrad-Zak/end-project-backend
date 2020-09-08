@@ -18,12 +18,12 @@ public class AppUserController {
     private AppUserDbService appUserDbService;
     private AppUserMapper appUserMapper;
 
-    @GetMapping(value = "")
+    @GetMapping()
     public List<AppUser> getAppUsers(){
         return appUserDbService.getAllAppUsers();
     }
 
-    @PostMapping()
+    @PostMapping("/create")
     public Boolean createAppUser(@RequestParam String login, @RequestParam String password){
         AppUserDto appUserDto = new AppUserDto(login,password);
         return appUserDbService.saveAppUser(appUserMapper.mapToAppUser(appUserDto));
@@ -32,6 +32,11 @@ public class AppUserController {
     @DeleteMapping(value = "/{appUserId}")
     public void deleteAppUser(@PathVariable Long appUserId){
         appUserDbService.deleteAppUser(appUserId);
+    }
+
+    @GetMapping(value = "/v")
+    public String show(){
+        return "Hello";
     }
 
 }

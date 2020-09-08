@@ -10,17 +10,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@AllArgsConstructor
 public class AppUserMapper {
 
     private PasswordEncoder passwordEncoder;
 
-    public AppUserMapper(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
-
     public AppUser mapToAppUser(final AppUserDto appUserDto){
         return new AppUser(appUserDto.getId(),appUserDto.getUsername(),
-                appUserDto.getPassword(),appUserDto.getRole());
+                passwordEncoder.encode(appUserDto.getPassword()),appUserDto.getRole());
     }
 
     public AppUserDto mapToAppUserDto(final  AppUser appUser){
