@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Getter
 @AllArgsConstructor
 public class AppUserDto {
-    private final static String ROLE = "USER";
+    private final static String ROLE = "ROLE_USER";
     private Long id;
     private String username;
     private String password;

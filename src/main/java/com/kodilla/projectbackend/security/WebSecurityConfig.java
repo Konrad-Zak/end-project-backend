@@ -30,9 +30,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
        http.httpBasic().and().authorizeRequests()
-               .antMatchers(HttpMethod.GET,"/v1/appUsers").hasAuthority("ADMIN")
-               .antMatchers(HttpMethod.GET, "/v1/appUsers/v").permitAll()
+               .antMatchers(HttpMethod.GET,"/v1/appUsers").hasAuthority("ROLE_ADMIN")
+               .antMatchers(HttpMethod.GET, "/v1/appUsers/").hasAuthority("ROLE_ADMIN")
                .and()
+               .formLogin().permitAll()
+               .and()
+               .headers().disable()
                .csrf().disable();
     }
 

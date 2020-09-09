@@ -17,7 +17,7 @@ public class AppUserDbService implements UserDetailsService {
     private AppUserRepository appUserRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public AppUser loadUserByUsername(String username) throws UsernameNotFoundException {
         return appUserRepository.findByUsername(username);
     }
 
@@ -25,9 +25,12 @@ public class AppUserDbService implements UserDetailsService {
         return appUserRepository.findAll();
     }
 
-    public Boolean saveAppUser(AppUser appUser){
+    public void saveAppUser(AppUser appUser){
         appUserRepository.save(appUser);
-        return appUserRepository.existsById(appUser.getId());
+    }
+
+    public Boolean checkExistsByUsername(String username){
+        return appUserRepository.existsByUsername(username);
     }
 
     public void deleteAppUser(Long appUserId){
