@@ -1,6 +1,5 @@
 package com.kodilla.projectbackend.controller;
 
-import com.kodilla.projectbackend.domian.AppUser;
 import com.kodilla.projectbackend.domian.AppUserDto;
 import com.kodilla.projectbackend.mapper.AppUserMapper;
 import com.kodilla.projectbackend.service.AppUserDbService;
@@ -35,9 +34,13 @@ public class AppUserController {
     }
 
     @GetMapping(value = "/{username}")
-    public AppUser getAppUser(@PathVariable  String username){
-        return appUserDbService.loadUserByUsername(username);
+    public AppUserDto getAppUserByUsername(@PathVariable  String username){
+            return appUserMapper.mapToAppUserDto(appUserDbService.loadUserByUsername(username));
     }
 
+    @GetMapping(value = "/{userId}")
+    public AppUserDto getAppUserByLoginId(@PathVariable Long userId){
+        return appUserMapper.mapToAppUserDto(appUserDbService.findUserById(userId));
+    }
 
 }
