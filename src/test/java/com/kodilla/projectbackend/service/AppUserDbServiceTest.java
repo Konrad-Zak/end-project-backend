@@ -20,16 +20,13 @@ public class AppUserDbServiceTest {
     private AppUserRepository appUserRepository;
 
     @Autowired
-    private AppUserMapper appUserMapper;
-
-    @Autowired
     private AppUserDbService appUserDbService;
 
     @Test
     public void loadUserByUsername() {
         //Given
         AppUserDto appUserDto = new AppUserDto("John","1234","ROLE_USER");
-        appUserRepository.save(appUserMapper.mapToAppUser(appUserDto));
+        appUserRepository.save(AppUserMapper.getInstance().mapToAppUser(appUserDto));
         //When
         AppUser appUser = appUserDbService.loadUserByUsername("John");
         //Then

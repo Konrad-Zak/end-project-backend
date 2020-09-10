@@ -30,6 +30,13 @@ public class AppUserDto implements UserDetails {
         this.role = ROLE;
     }
 
+    public AppUserDto(Long id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = ROLE;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(role));

@@ -2,22 +2,27 @@ package com.kodilla.projectbackend.mapper;
 
 import com.kodilla.projectbackend.domian.AppUser;
 import com.kodilla.projectbackend.domian.AppUserDto;
-import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
-@AllArgsConstructor
-public class AppUserMapper {
+public final class AppUserMapper {
 
-    private PasswordEncoder passwordEncoder;
+    private static AppUserMapper appUserMapper = null;
+
+    public AppUserMapper() {
+    }
+
+    public static AppUserMapper getInstance() {
+        if (appUserMapper == null) {
+            appUserMapper = new AppUserMapper();
+        }
+        return appUserMapper;
+    }
 
     public AppUser mapToAppUser(final AppUserDto appUserDto){
-        return new AppUser(appUserDto.getId(),appUserDto.getUsername(),
-                passwordEncoder.encode(appUserDto.getPassword()),appUserDto.getRole());
+        return new AppUser(appUserDto.getId(),appUserDto.getUsername(),appUserDto.getPassword(),appUserDto.getRole());
     }
 
     public AppUserDto mapToAppUserDto(final  AppUser appUser){
