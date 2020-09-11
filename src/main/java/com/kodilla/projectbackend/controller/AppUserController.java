@@ -24,14 +24,15 @@ public class AppUserController {
     }
 
     @PostMapping()
-    public void createAppUser(@RequestParam String login, @RequestParam String password){
-        AppUserDto appUserDto = new AppUserDto(login,passwordEncoder.encode(password));
+    public Boolean createAppUser(@RequestParam String username, @RequestParam String password){
+        AppUserDto appUserDto = new AppUserDto(username,passwordEncoder.encode(password));
         appUserDbService.saveAppUser(AppUserMapper.getInstance().mapToAppUser(appUserDto));
+        return appUserDbService.checkExistsByUsername(username);
     }
 
     @PutMapping()
-    public void updateAppUser(@RequestParam Long appUserId, @RequestParam String login, @RequestParam String password){
-        AppUserDto appUserDto = new AppUserDto(appUserId,login,passwordEncoder.encode(password));
+    public void updateAppUser(@RequestParam Long appUserId, @RequestParam String username, @RequestParam String password){
+        AppUserDto appUserDto = new AppUserDto(appUserId,username,passwordEncoder.encode(password));
         appUserDbService.saveAppUser(AppUserMapper.getInstance().mapToAppUser(appUserDto));
     }
 
@@ -43,6 +44,11 @@ public class AppUserController {
     @GetMapping()
     public AppUserDto getAppUserByUsername(@RequestParam  String username){
             return AppUserMapper.getInstance().mapToAppUserDto(appUserDbService.loadUserByUsername(username));
+    }
+
+    @GetMapping(value = "/check")
+    public Boolean checkExistByUsername(@RequestParam String username){
+        return appUserDbService.checkExistsByUsername(username);
     }
 
     @GetMapping("/find")
