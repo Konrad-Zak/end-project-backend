@@ -18,7 +18,7 @@ public class CurioClient {
 
     public CurioDto getCurrentCurio(){
         try {
-            URI uri = UriComponentsBuilder.fromHttpUrl("http://numbersap.com/" + LocalDate.now().getMonthValue()
+            URI uri = UriComponentsBuilder.fromHttpUrl("http://numbersapi.com/" + LocalDate.now().getMonthValue()
                     + "/" + LocalDate.now().getDayOfMonth() + "/date")
                     .queryParam("json")
                     .build().encode().toUri();

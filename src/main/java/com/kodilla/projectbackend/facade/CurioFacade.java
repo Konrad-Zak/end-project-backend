@@ -8,10 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -19,9 +16,7 @@ import java.util.Random;
 @AllArgsConstructor
 public class CurioFacade {
 
-
     private CurioDbService curioDbService;
-
 
     public CurioDto getCurioOfToday(){
         CurioDto curioDto = curioDbService.getCurioDay();
