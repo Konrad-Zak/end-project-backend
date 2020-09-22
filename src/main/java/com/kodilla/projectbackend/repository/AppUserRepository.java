@@ -13,9 +13,6 @@ public interface AppUserRepository extends CrudRepository<AppUser, Long> {
 
     Optional<AppUser> findByUsername(String username);
 
-    @Override
-    Optional<AppUser> findById(Long aLong);
-
     Boolean existsByUsername(String username);
 
 }

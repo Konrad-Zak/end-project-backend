@@ -1,10 +1,8 @@
 package com.kodilla.projectbackend.controller;
 
 import com.kodilla.projectbackend.domian.AppUserDto;
-import com.kodilla.projectbackend.mapper.AppUserMapper;
-import com.kodilla.projectbackend.service.AppUserDbService;
+import com.kodilla.projectbackend.facade.AppUserFacade;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,45 +13,36 @@ import java.util.List;
 @AllArgsConstructor
 public class AppUserController {
 
-    private AppUserDbService appUserDbService;
-    private PasswordEncoder passwordEncoder;
+    private AppUserFacade appUserFacade;
 
     @GetMapping(value = "/admin/users")
     public List<AppUserDto> getAppUsers(){
-        return AppUserMapper.getInstance().mapToAppUserDtoList(appUserDbService.getAllAppUsers());
+        return appUserFacade.getAppUsers();
     }
 
     @PostMapping()
     public Boolean createAppUser(@RequestParam String username, @RequestParam String password){
-        AppUserDto appUserDto = new AppUserDto(username,passwordEncoder.encode(password));
-        appUserDbService.saveAppUser(AppUserMapper.getInstance().mapToAppUser(appUserDto));
-        return appUserDbService.checkExistsByUsername(username);
+        return appUserFacade.createAppUser(username,password);
     }
 
     @PutMapping()
     public void updateAppUser(@RequestParam Long appUserId, @RequestParam String username, @RequestParam String password){
-        AppUserDto appUserDto = new AppUserDto(appUserId,username,passwordEncoder.encode(password));
-        appUserDbService.saveAppUser(AppUserMapper.getInstance().mapToAppUser(appUserDto));
+        appUserFacade.updateAppUser(appUserId,username,password);
     }
 
     @DeleteMapping(value = "/admin/delete")
     public void deleteAppUser(@RequestParam Long appUserId){
-        appUserDbService.deleteAppUser(appUserId);
+        appUserFacade.deleteAppUser(appUserId);
     }
 
     @GetMapping()
     public AppUserDto getAppUserByUsername(@RequestParam  String username){
-            return AppUserMapper.getInstance().mapToAppUserDto(appUserDbService.loadUserByUsername(username));
+            return appUserFacade.getAppUserByUsername(username);
     }
 
     @GetMapping(value = "/check")
     public Boolean checkExistByUsername(@RequestParam String username){
-        return appUserDbService.checkExistsByUsername(username);
-    }
-
-    @GetMapping("/find")
-    public AppUserDto getAppUserByLoginId(@RequestParam Long appUserId){
-        return AppUserMapper.getInstance().mapToAppUserDto(appUserDbService.findUserById(appUserId));
+        return appUserFacade.checkExistByUsername(username);
     }
 
 }

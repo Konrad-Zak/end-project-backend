@@ -12,10 +12,10 @@ public class AdminConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminConfiguration.class);
 
-    public AdminConfiguration(AppUserDbService appUserDbService) {
+    public AdminConfiguration(AppUserDbService appUserDbService, AppUserMapper appUserMapper) {
         AppUserDto appUserDto = new AppUserDto("ADMIN","ADMIN","ROLE_ADMIN");
         if(!appUserDbService.checkExistsByUsername(appUserDto.getUsername())){
-            appUserDbService.saveAppUser(AppUserMapper.getInstance().mapToAppUser(appUserDto));
+            appUserDbService.saveAppUser(appUserMapper.mapToAppUser(appUserDto));
             LOGGER.info("Create Admin account in the database");
         } else {
             LOGGER.info("Found Admin account in the database");

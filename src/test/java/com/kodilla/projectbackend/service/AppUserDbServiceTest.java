@@ -22,11 +22,14 @@ public class AppUserDbServiceTest {
     @Autowired
     private AppUserDbService appUserDbService;
 
+    @Autowired
+    private AppUserMapper appUserMapper;
+
     @Test
     public void loadUserByUsername() {
         //Given
         AppUserDto appUserDto = new AppUserDto("John","1234","ROLE_USER");
-        appUserRepository.save(AppUserMapper.getInstance().mapToAppUser(appUserDto));
+        appUserRepository.save(appUserMapper.mapToAppUser(appUserDto));
         //When
         AppUser appUser = appUserDbService.loadUserByUsername("John");
         //Then

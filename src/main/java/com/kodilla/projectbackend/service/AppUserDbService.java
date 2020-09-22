@@ -22,9 +22,6 @@ public class AppUserDbService implements UserDetailsService {
         return appUserRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
     }
 
-    public AppUser findUserById(Long userId){
-        return appUserRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-    }
 
     public List<AppUser> getAllAppUsers(){
         return appUserRepository.findAll();
