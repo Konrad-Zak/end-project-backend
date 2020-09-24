@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -19,7 +20,6 @@ public class AppUserFacade {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AppUserFacade.class);
     private AppUserDbService appUserDbService;
-    private PasswordEncoder passwordEncoder;
     private AppUserMapper appUserMapper;
 
     public List<AppUserDto> getAppUsers(){
@@ -27,30 +27,29 @@ public class AppUserFacade {
         return appUserMapper.mapToAppUserDtoList(appUserDbService.getAllAppUsers());
     }
 
-    public Boolean createAppUser(@RequestParam String username, @RequestParam String password){
-        AppUserDto appUserDto = new AppUserDto(username,passwordEncoder.encode(password));
+    public Boolean createAppUser(String username, String password){
+        AppUserDto appUserDto = new AppUserDto(username,password);
         LOGGER.info("Request: create new user: " + username);
         appUserDbService.saveAppUser(appUserMapper.mapToAppUser(appUserDto));
         return appUserDbService.checkExistsByUsername(username);
     }
 
-    public void updateAppUser(@RequestParam Long appUserId, @RequestParam String username, @RequestParam String password){
-        AppUserDto appUserDto = new AppUserDto(appUserId,username,passwordEncoder.encode(password));
-        LOGGER.info("Request: update user: " + username);
+    public void updateAppUser(AppUserDto appUserDto){
+        LOGGER.info("Request: update user: " + appUserDto.getUsername());
         appUserDbService.saveAppUser(appUserMapper.mapToAppUser(appUserDto));
     }
 
-    public void deleteAppUser(@RequestParam Long appUserId){
+    public void deleteAppUser(Long appUserId){
         LOGGER.info("Request: delete user with id: " + appUserId);
         appUserDbService.deleteAppUser(appUserId);
     }
 
-    public AppUserDto getAppUserByUsername(@RequestParam  String username){
+    public AppUserDto getAppUserByUsername(String username){
         LOGGER.debug("Request: get user: " + username);
         return appUserMapper.mapToAppUserDto(appUserDbService.loadUserByUsername(username));
     }
 
-    public Boolean checkExistByUsername(@RequestParam String username){
+    public Boolean checkExistByUsername(String username){
         LOGGER.debug("Request: Check exist user: " + username);
         return appUserDbService.checkExistsByUsername(username);
     }

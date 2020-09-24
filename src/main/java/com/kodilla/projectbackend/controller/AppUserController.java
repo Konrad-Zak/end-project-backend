@@ -26,8 +26,8 @@ public class AppUserController {
     }
 
     @PutMapping()
-    public void updateAppUser(@RequestParam Long appUserId, @RequestParam String username, @RequestParam String password){
-        appUserFacade.updateAppUser(appUserId,username,password);
+    public void updateAppUser(@RequestBody AppUserDto appUserDto){
+        appUserFacade.updateAppUser(appUserDto);
     }
 
     @DeleteMapping(value = "/admin/delete")
