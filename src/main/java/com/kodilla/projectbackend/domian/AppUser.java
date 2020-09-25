@@ -28,12 +28,10 @@ public class AppUser implements UserDetails{
     @Column(name = "USER_ROLE")
     private String role;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(role));
     }
-
 
     @Override
     public boolean isAccountNonExpired() {

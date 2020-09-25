@@ -1,6 +1,5 @@
 package com.kodilla.projectbackend.facade;
 
-import com.kodilla.projectbackend.configuration.AdminConfiguration;
 import com.kodilla.projectbackend.domian.Curio;
 import com.kodilla.projectbackend.domian.CurioDto;
 import com.kodilla.projectbackend.mapper.CurioMapper;

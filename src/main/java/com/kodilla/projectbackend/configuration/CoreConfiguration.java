@@ -2,7 +2,6 @@ package com.kodilla.projectbackend.configuration;
 
 import com.kodilla.projectbackend.observer.CurioClientProblem;
 import com.kodilla.projectbackend.observer.NewClientProblem;
-import com.kodilla.projectbackend.observer.Problem;
 import com.kodilla.projectbackend.observer.ProblemObserver;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;

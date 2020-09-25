@@ -22,7 +22,7 @@ public class AppUserInfo {
     @Column(name = "EMAIL")
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "APP_USER_ID")
     private AppUser appUser;
 

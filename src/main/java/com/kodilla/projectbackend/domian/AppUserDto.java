@@ -14,6 +14,7 @@ import java.util.Collections;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppUserDto implements UserDetails {
+
     private Long id;
     private String username;
     private String password;

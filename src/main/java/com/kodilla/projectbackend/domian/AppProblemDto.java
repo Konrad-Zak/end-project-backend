@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 @Getter
 @AllArgsConstructor
 public class AppProblemDto {
+
     private Long id;
     private String text;
     private Timestamp timestamp;
