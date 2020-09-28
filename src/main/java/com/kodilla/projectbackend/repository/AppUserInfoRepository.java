@@ -13,7 +13,6 @@ public interface AppUserInfoRepository extends CrudRepository<AppUserInfo, Long>
 
     Optional<AppUserInfo> findByAppUserId(Long appUserId);
 
-    boolean existsById (Long appUserInfoId);
-
     Boolean deleteByAppUser_Id(Long appUserId);
+
 }
