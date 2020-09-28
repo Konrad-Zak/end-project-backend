@@ -18,7 +18,7 @@ public class CurioController {
     private  CurioFacade curioFacade;
 
     @GetMapping()
-    public CurioDto getCurioCurrentDate(){
+    public CurioDto getCurioCurrentDate() {
         return curioFacade.getCurioOfToday();
     }
 }

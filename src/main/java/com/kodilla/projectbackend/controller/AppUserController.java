@@ -21,27 +21,27 @@ public class AppUserController {
     }
 
     @PostMapping()
-    public Boolean createAppUser(@RequestParam String username, @RequestParam String password){
+    public Boolean createAppUser(@RequestParam String username, @RequestParam String password) {
         return appUserFacade.createAppUser(username,password);
     }
 
     @PutMapping()
-    public void updateAppUser(@RequestBody AppUserDto appUserDto){
+    public void updateAppUser(@RequestBody AppUserDto appUserDto) {
         appUserFacade.updateAppUser(appUserDto);
     }
 
     @DeleteMapping(value = "/admin/delete")
-    public void deleteAppUser(@RequestParam Long appUserId){
+    public void deleteAppUser(@RequestParam Long appUserId) {
         appUserFacade.deleteAppUser(appUserId);
     }
 
     @GetMapping()
-    public AppUserDto getAppUserByUsername(@RequestParam  String username){
+    public AppUserDto getAppUserByUsername(@RequestParam  String username) {
             return appUserFacade.getAppUserByUsername(username);
     }
 
     @GetMapping(value = "/check")
-    public Boolean checkExistByUsername(@RequestParam String username){
+    public Boolean checkExistByUsername(@RequestParam String username) {
         return appUserFacade.checkExistByUsername(username);
     }
 

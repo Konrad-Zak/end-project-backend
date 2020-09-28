@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppUserInfoMapper {
 
-    public AppUserInfo mapToAppUserInfo(AppUserInfoDto appUserInfoDto){
+    public AppUserInfo mapToAppUserInfo(AppUserInfoDto appUserInfoDto) {
         return new AppUserInfo(appUserInfoDto.getId(),appUserInfoDto.getFirstName(),
                 appUserInfoDto.getEmail(),appUserInfoDto.getAppUser());
     }
 
-    public AppUserInfoDto mapToAppUserInfoDto(AppUserInfo appUserInfo){
+    public AppUserInfoDto mapToAppUserInfoDto(AppUserInfo appUserInfo) {
         return new AppUserInfoDto(appUserInfo.getId(),appUserInfo.getFirstName(),
                 appUserInfo.getEmail(),appUserInfo.getAppUser());
     }

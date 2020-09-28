@@ -24,7 +24,7 @@ public class CurioFacade {
     private CurioClientProblem curioClientProblem;
     private CurioMapper curioMapper;
 
-    public CurioDto getCurioOfToday(){
+    public CurioDto getCurioOfToday() {
         CurioDto curioDto = curioDbService.getCurioDay();
         return curioDto.getText() != null ? saveAndReturn(curioDto): getAlternativeCurio();
     }
@@ -35,12 +35,12 @@ public class CurioFacade {
         return curioDto;
     }
 
-    private CurioDto getAlternativeCurio(){
+    private CurioDto getAlternativeCurio() {
         reportProblem();
         return getRandomCurioDay();
     }
 
-    private void reportProblem(){
+    private void reportProblem() {
         curioClientProblem.addMessage("External curio system is break down");
         curioClientProblem.notifyObservers();
     }

@@ -17,23 +17,23 @@ public class AppUserMapper {
     private final static String ROLE = "ROLE_USER";
     private PasswordEncoder passwordEncoder;
 
-    public AppUser mapToAppUser(final AppUserDto appUserDto){
+    public AppUser mapToAppUser(final AppUserDto appUserDto) {
         return new AppUser(appUserDto.getId(),appUserDto.getUsername(),
                 passwordEncoder.encode(appUserDto.getPassword()),selectRole(appUserDto));
     }
 
-    public AppUserDto mapToAppUserDto(final  AppUser appUser){
+    public AppUserDto mapToAppUserDto(final  AppUser appUser) {
         return new AppUserDto(appUser.getId(),appUser.getUsername(),appUser.getPassword(),appUser.getRole());
     }
 
-    public List<AppUserDto> mapToAppUserDtoList(final List<AppUser> appUserList){
+    public List<AppUserDto> mapToAppUserDtoList(final List<AppUser> appUserList) {
         return appUserList.stream()
                 .map(appUser -> new AppUserDto(
                         appUser.getId(),appUser.getUsername(),appUser.getPassword(),appUser.getRole()))
                 .collect(Collectors.toList());
     }
 
-    private String selectRole(AppUserDto appUserDto){
+    private String selectRole(AppUserDto appUserDto) {
         return appUserDto.getRole()==null ? ROLE : appUserDto.getRole();
     }
 }

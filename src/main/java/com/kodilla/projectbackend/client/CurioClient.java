@@ -19,7 +19,7 @@ public class CurioClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(CurioClient.class);
     private RestTemplate restTemplate;
 
-    public CurioDto getCurrentCurio(){
+    public CurioDto getCurrentCurio() {
         try {
             URI uri = UriComponentsBuilder.fromHttpUrl("http://numbersapi.com/" + LocalDate.now().getMonthValue()
                     + "/" + LocalDate.now().getDayOfMonth() + "/date")

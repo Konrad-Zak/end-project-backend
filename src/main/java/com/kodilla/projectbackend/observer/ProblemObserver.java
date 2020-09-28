@@ -13,7 +13,7 @@ import java.time.Instant;
 
 @Component
 @AllArgsConstructor
-public class ProblemObserver implements Observer{
+public class ProblemObserver implements Observer {
 
     private AppProblemMapper appProblemMapper;
     private AppProblemDbService appProblemDbService;

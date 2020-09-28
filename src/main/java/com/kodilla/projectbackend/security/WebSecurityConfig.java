@@ -31,7 +31,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
        http.httpBasic().and().authorizeRequests()
                .antMatchers(HttpMethod.GET,"/v1/appUsers/admin/users").hasAuthority("ROLE_ADMIN")
-               .antMatchers(HttpMethod.GET, "/v1/appUsers/admin/users").hasAuthority("ROLE_ADMIN")
+               .antMatchers(HttpMethod.GET, "/v1/appUsers/admin/users/").hasAuthority("ROLE_ADMIN")
+               .antMatchers(HttpMethod.GET, "/v1/appInfoUsers/admin/users").hasAuthority("ROLE_ADMIN")
+               .antMatchers(HttpMethod.GET, "/v1/appInfoUsers/admin/users/").hasAuthority("ROLE_ADMIN")
+               .antMatchers(HttpMethod.DELETE, "/v1/appUsers/admin/delete").hasAuthority("ROLE_ADMIN")
                .and()
                .formLogin().permitAll()
                .and()
