@@ -1,12 +1,12 @@
 package com.kodilla.projectbackend.service;
 
 import com.kodilla.projectbackend.domian.AppUserInfo;
+import com.kodilla.projectbackend.exception.UserNotFoundException;
 import com.kodilla.projectbackend.repository.AppUserInfoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -22,8 +22,8 @@ public class AppUserInfoDbService {
         appUserInfoRepository.save(appUserInfo);
     }
 
-    public Optional<AppUserInfo> getAppUserInfoByAppUserId(Long appUserId) {
-        return appUserInfoRepository.findByAppUserId(appUserId);
+    public AppUserInfo getAppUserInfoByAppUserId(Long appUserId) {
+        return appUserInfoRepository.findByAppUserId(appUserId).orElseThrow(UserNotFoundException::new);
     }
 
     public Boolean checkAppUserInfoExist(Long appUserInfoId) {
