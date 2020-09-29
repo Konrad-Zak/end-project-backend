@@ -1,9 +1,12 @@
 package com.kodilla.projectbackend.facade;
 
+import com.kodilla.projectbackend.configuration.EmailConfiguration;
 import com.kodilla.projectbackend.domian.AppUserMessage;
 import com.kodilla.projectbackend.domian.AppUserMessageDto;
+import com.kodilla.projectbackend.domian.Mail;
 import com.kodilla.projectbackend.mapper.AppUserMessageMapper;
 import com.kodilla.projectbackend.service.AppUserMessageDbService;
+import com.kodilla.projectbackend.service.MailSenderService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +22,14 @@ public class AppUserMessageFacade {
     private static final Logger LOGGER = LoggerFactory.getLogger(AppUserMessageFacade.class);
     private AppUserMessageDbService appUserMessageDbService;
     private AppUserMessageMapper appUserMessageMapper;
+    private MailSenderService mailSenderService;
+    private EmailConfiguration emailConfiguration;
 
     public Boolean createAppUserMessage(AppUserMessageDto appUserMessageDto) {
         AppUserMessage appUserMessage = appUserMessageMapper.mapToAppUserMessage(appUserMessageDto);
         LOGGER.info("Request: create new appUserMessage form "+ appUserMessage.getEmail());
         appUserMessageDbService.saveAppUserMessage(appUserMessage);
+        sendMailToAdmin(appUserMessage);
         return appUserMessageDbService.appUserMessageIsExist(appUserMessage.getId());
     }
 
@@ -35,6 +41,12 @@ public class AppUserMessageFacade {
     public Boolean deleteByLocalDateBefore(LocalDate localDate) {
         LOGGER.debug("Request: delete all users message before: " + localDate);
         return appUserMessageDbService.deleteByLocalDateBefore(localDate);
+    }
+
+    private void sendMailToAdmin(AppUserMessage appUserMessage) {
+        String subject = "New message form: "+ appUserMessage.getEmail();
+        mailSenderService.send(
+                new Mail(emailConfiguration.getAdminEmail(), subject , appUserMessage.getMessage()));
     }
 
 }
