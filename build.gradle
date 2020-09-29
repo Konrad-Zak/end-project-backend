@@ -17,6 +17,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.security:spring-security-test'
+	compile('org.springframework.boot:spring-boot-starter-mail:1.5.7.RELEASE')
 	compile('org.projectlombok:lombok')
 	annotationProcessor 'org.projectlombok:lombok'
 	runtimeOnly('mysql:mysql-connector-java')

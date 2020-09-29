@@ -1,7 +1,7 @@
 package com.kodilla.projectbackend.configuration;
 
 import com.kodilla.projectbackend.observer.CurioClientProblem;
-import com.kodilla.projectbackend.observer.NewClientProblem;
+import com.kodilla.projectbackend.observer.SendEmailProcessProblem;
 import com.kodilla.projectbackend.observer.ProblemObserver;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +25,7 @@ public class CoreConfiguration {
     }
 
     @Bean
-    public NewClientProblem newClientProblem(){
-        return new NewClientProblem(problemObserver);
+    public SendEmailProcessProblem sendEmailProcessProblem(){
+        return new SendEmailProcessProblem(problemObserver);
     }
 }

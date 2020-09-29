@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class AppUserMapper {
 
-    private final static String ROLE = "ROLE_USER";
+    private static final String ROLE = "ROLE_USER";
     private PasswordEncoder passwordEncoder;
 
     public AppUser mapToAppUser(final AppUserDto appUserDto) {
