@@ -14,4 +14,9 @@ public class AppUserInfoDto {
     private String email;
     private AppUser appUser;
 
+    public AppUserInfoDto(Long id, String firstName, String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.email = email;
+    }
 }

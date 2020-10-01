@@ -33,4 +33,9 @@ public class CurioDbService {
     public void saveCurio(Curio curio){
         curioRepository.save(curio);
     }
+
+    public void cleanAllCuriosInDb() {
+        curioRepository.deleteAll();
+    }
+
 }

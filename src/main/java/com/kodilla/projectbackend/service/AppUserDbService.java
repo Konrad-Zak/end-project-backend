@@ -4,9 +4,7 @@ import com.kodilla.projectbackend.domian.AppUser;
 import com.kodilla.projectbackend.exception.UserNotFoundException;
 import com.kodilla.projectbackend.repository.AppUserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,8 +16,12 @@ public class AppUserDbService implements UserDetailsService {
     private AppUserRepository appUserRepository;
 
     @Override
-    public AppUser loadUserByUsername(String username)  {
+    public AppUser loadUserByUsername(String username) {
         return appUserRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+    }
+
+    public AppUser getAppUserById(Long appUserId) {
+        return appUserRepository.findById(appUserId).orElseThrow(UserNotFoundException::new);
     }
 
 
@@ -35,8 +37,13 @@ public class AppUserDbService implements UserDetailsService {
         return appUserRepository.existsByUsername(username);
     }
 
-    public void deleteAppUser(Long appUserId){
+    public Boolean deleteAppUser(Long appUserId){
         appUserRepository.deleteById(appUserId);
+        return appUserRepository.existsById(appUserId);
+    }
+
+    public Boolean existByAppUserId(Long appUserId) {
+        return appUserRepository.existsById(appUserId);
     }
 
 }

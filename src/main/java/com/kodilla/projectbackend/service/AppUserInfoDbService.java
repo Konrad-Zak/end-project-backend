@@ -30,8 +30,9 @@ public class AppUserInfoDbService {
         return appUserInfoRepository.existsById(appUserInfoId);
     }
 
-    public Boolean deleteByAppUserId(Long appUserId) {
-        return appUserInfoRepository.deleteByAppUser_Id(appUserId);
+    public Boolean deleteByAppUserId(Long appUserInfoId) {
+        appUserInfoRepository.deleteById(appUserInfoId);
+        return appUserInfoRepository.existsById(appUserInfoId);
     }
 
 }

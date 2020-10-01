@@ -14,6 +14,6 @@ public class AppUserInfoMapper {
 
     public AppUserInfoDto mapToAppUserInfoDto(AppUserInfo appUserInfo) {
         return new AppUserInfoDto(appUserInfo.getId(),appUserInfo.getFirstName(),
-                appUserInfo.getEmail(),appUserInfo.getAppUser());
+                appUserInfo.getEmail());
     }
 }
