@@ -26,7 +26,7 @@ public class CalorieInfoFacade {
     private CalorieInfoMapper calorieInfoMapper;
 
 
-    public CalorieInfoDto createAppCalorieInfo(Long appUserId, Double weight, Double fitness) {
+    public Boolean createAppCalorieInfo(Long appUserId, Double weight, Double fitness) {
         if (!calorieInfoService.checkExistByAppUserId(appUserId)){
             AppUserCalorie appUserCalorie = appUserCalorieMapper
                     .mapToAppUserCalorie(calorieCalculateService.calculateCalorie(weight,fitness));
@@ -35,7 +35,7 @@ public class CalorieInfoFacade {
             AppUser appUser = appUserDbService.getAppUserById(appUserId);
 
             saveAppCalorieInfo(new CalorieInfoDto(weight,fitness,appUserCalorie,appUser));
-            return calorieInfoMapper.simpleMapToCalorieInfoDto(calorieInfoService.getCalorieInfoByAppUserId(appUserId));
+            return calorieInfoService.checkExistByAppUserId(appUserId);
         } else {
             throw new UserIdException();
         }
@@ -45,7 +45,7 @@ public class CalorieInfoFacade {
         return calorieInfoMapper.simpleMapToCalorieInfoDto(calorieInfoService.getCalorieInfoByAppUserId(appUserId));
     }
 
-    public CalorieInfoDto updateAppCalorieInfo(Long appUserId, Double weight, Double fitness) {
+    public void updateAppCalorieInfo(Long appUserId, Double weight, Double fitness) {
         CalorieInfoDto calorieInfoDto = calorieInfoMapper
                 .mapToCalorieInfoDto(calorieInfoService.getCalorieInfoByAppUserId(appUserId));
 
@@ -56,7 +56,10 @@ public class CalorieInfoFacade {
 
         calorieInfoDto.setNewValues(weight,fitness);
         saveAppCalorieInfo(calorieInfoDto);
-        return calorieInfoMapper.simpleMapToCalorieInfoDto(calorieInfoService.getCalorieInfoByAppUserId(appUserId));
+    }
+
+    public Boolean checkExistByAppUserId(Long appUserId) {
+        return calorieInfoService.checkExistByAppUserId(appUserId);
     }
 
     private void saveAppUserCalorie(AppUserCalorie appUserCalorie) {

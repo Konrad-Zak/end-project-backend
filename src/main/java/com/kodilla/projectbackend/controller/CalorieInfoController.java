@@ -15,7 +15,7 @@ public class CalorieInfoController {
     private CalorieInfoFacade calorieInfoFacade;
 
     @PostMapping()
-    public CalorieInfoDto createAppCalorieCalculator(
+    public Boolean createAppCalorieCalculator(
             @RequestParam Long appUserId, @RequestParam Double weight, @RequestParam Double fitness) {
         return calorieInfoFacade.createAppCalorieInfo(appUserId,weight,fitness);
     }
@@ -26,9 +26,14 @@ public class CalorieInfoController {
     }
 
     @PutMapping()
-    public CalorieInfoDto updateAppCalorieCalculator(
+    public void updateAppCalorieCalculator(
             @RequestParam Long appUserId, @RequestParam Double weight, @RequestParam Double fitness) {
-        return calorieInfoFacade.updateAppCalorieInfo(appUserId,weight,fitness);
+        calorieInfoFacade.updateAppCalorieInfo(appUserId,weight,fitness);
+    }
+
+    @GetMapping(value = "/check")
+    public Boolean checkExistByAppUserId(@RequestParam Long appUserId) {
+        return calorieInfoFacade.checkExistByAppUserId(appUserId);
     }
 
 }
