@@ -1,5 +1,6 @@
 package com.kodilla.projectbackend.client;
 
+import com.kodilla.projectbackend.configuration.ExternalApiConfiguration;
 import com.kodilla.projectbackend.domian.CurioDto;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -18,10 +19,12 @@ public class CurioClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CurioClient.class);
     private RestTemplate restTemplate;
+    private ExternalApiConfiguration apiConfiguration;
 
     public CurioDto getCurrentCurio() {
         try {
-            URI uri = UriComponentsBuilder.fromHttpUrl("http://numbersapi.com/" + LocalDate.now().getMonthValue()
+            LOGGER.debug("Send request to external curio system");
+            URI uri = UriComponentsBuilder.fromHttpUrl(apiConfiguration.getCurioApiEndpoint() + LocalDate.now().getMonthValue()
                     + "/" + LocalDate.now().getDayOfMonth() + "/date")
                     .queryParam("json")
                     .build().encode().toUri();
