@@ -16,4 +16,10 @@ public class AppUserMessageDto {
     private String email;
     private String message;
     private LocalDate localDate;
+
+    public AppUserMessageDto(String email, String message, LocalDate localDate) {
+        this.email = email;
+        this.message = message;
+        this.localDate = localDate;
+    }
 }

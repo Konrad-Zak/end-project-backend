@@ -11,5 +11,7 @@ public interface AppUserMessageRepository extends CrudRepository<AppUserMessage,
     @Override
     List<AppUserMessage>findAll();
 
-    Boolean deleteByLocalDateBefore(LocalDate localDate);
+    List<AppUserMessage>findAllByLocalDateBefore(LocalDate localDate);
+
+    Boolean existsByLocalDateBefore(LocalDate localDate);
 }

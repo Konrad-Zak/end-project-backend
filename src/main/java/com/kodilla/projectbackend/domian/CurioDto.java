@@ -15,4 +15,8 @@ public class CurioDto {
     private String text;
     private Integer year;
 
+    public CurioDto(String text, Integer year) {
+        this.text = text;
+        this.year = year;
+    }
 }

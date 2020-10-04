@@ -5,13 +5,19 @@ import com.kodilla.projectbackend.repository.AppProblemRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class AppProblemDbService {
 
     private AppProblemRepository appProblemRepository;
 
-    public void saveProblem(AppProblem appProblem){
+    public void saveProblem(AppProblem appProblem) {
         appProblemRepository.save(appProblem);
+    }
+
+    public List<AppProblem> getAllAppProblem() {
+        return appProblemRepository.findAll();
     }
 }

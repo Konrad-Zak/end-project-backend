@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class AppUserCalorieService {
+public class AppUserCalorieDbService {
 
     private AppUserCalorieRepository appUserCalorieRepository;
 

@@ -35,12 +35,12 @@ public class AppUserMessageFacade {
 
     public List<AppUserMessageDto> getAllAppUserMessage() {
         LOGGER.debug("Request: get all users message ");
-        return appUserMessageMapper.mapToAppUserMessageDtoList(appUserMessageDbService.gelAllAppUserMessage());
+        return appUserMessageMapper.mapToAppUserMessageDtoList(appUserMessageDbService.getAllAppUserMessage());
     }
 
     public Boolean deleteByLocalDateBefore(LocalDate localDate) {
         LOGGER.debug("Request: delete all users message before: " + localDate);
-        return appUserMessageDbService.deleteByLocalDateBefore(localDate);
+        return !appUserMessageDbService.deleteByLocalDateBefore(localDate);
     }
 
     private void sendMailToAdmin(AppUserMessage appUserMessage) {

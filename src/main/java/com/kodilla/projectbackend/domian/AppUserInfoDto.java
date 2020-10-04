@@ -19,4 +19,10 @@ public class AppUserInfoDto {
         this.firstName = firstName;
         this.email = email;
     }
+
+    public AppUserInfoDto(String firstName, String email, AppUser appUser) {
+        this.firstName = firstName;
+        this.email = email;
+        this.appUser = appUser;
+    }
 }

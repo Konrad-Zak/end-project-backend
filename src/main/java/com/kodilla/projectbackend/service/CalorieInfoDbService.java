@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class CalorieInfoService {
+public class CalorieInfoDbService {
 
     private CalorieInfoRepository calorieInfoRepository;
 
-    public void saveAppCalorieInfo(CalorieInfo calorieInfo) {
+    public void saveCalorieInfo(CalorieInfo calorieInfo) {
         calorieInfoRepository.save(calorieInfo);
     }
 
