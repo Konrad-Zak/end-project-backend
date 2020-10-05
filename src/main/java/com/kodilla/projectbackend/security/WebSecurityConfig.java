@@ -34,6 +34,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                .antMatchers(HttpMethod.GET, "/v1/appUsers/admin/users/").hasAuthority("ROLE_ADMIN")
                .antMatchers(HttpMethod.GET, "/v1/appInfoUsers/admin/users").hasAuthority("ROLE_ADMIN")
                .antMatchers(HttpMethod.GET, "/v1/appInfoUsers/admin/users/").hasAuthority("ROLE_ADMIN")
+               .antMatchers(HttpMethod.GET, "/v1/appProblem/admin").hasAuthority("ROLE_ADMIN")
+               .antMatchers(HttpMethod.GET, "/v1/appProblem/admin/").hasAuthority("ROLE_ADMIN")
                .antMatchers(HttpMethod.DELETE, "/v1/appUsers/admin/delete").hasAuthority("ROLE_ADMIN")
                .and()
                .formLogin().permitAll()

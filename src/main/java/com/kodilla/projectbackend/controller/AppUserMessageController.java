@@ -5,7 +5,6 @@ import com.kodilla.projectbackend.facade.AppUserMessageFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -27,7 +26,7 @@ public class AppUserMessageController {
     }
 
     @DeleteMapping(value = "/admin/delete")
-    public Boolean deleteByLocalDateBefore(@RequestParam LocalDate localDate) {
+    public Boolean deleteByLocalDateBefore(@RequestParam String localDate) {
         return appUserMessageFacade.deleteByLocalDateBefore(localDate);
     }
 }

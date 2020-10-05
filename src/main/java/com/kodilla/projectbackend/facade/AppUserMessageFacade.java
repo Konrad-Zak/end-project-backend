@@ -38,9 +38,15 @@ public class AppUserMessageFacade {
         return appUserMessageMapper.mapToAppUserMessageDtoList(appUserMessageDbService.getAllAppUserMessage());
     }
 
-    public Boolean deleteByLocalDateBefore(LocalDate localDate) {
-        LOGGER.debug("Request: delete all users message before: " + localDate);
-        return !appUserMessageDbService.deleteByLocalDateBefore(localDate);
+    public Boolean deleteByLocalDateBefore(String localDate) {
+        try {
+            LocalDate localDateConvert = LocalDate.parse(localDate);
+            LOGGER.debug("Request: delete all users message before: " + localDateConvert);
+            return !appUserMessageDbService.deleteByLocalDateBefore(localDateConvert);
+        } catch (RuntimeException ex){
+            LOGGER.debug("Request: Can not delete all users message before: " + localDate);
+            return false;
+        }
     }
 
     private void sendMailToAdmin(AppUserMessage appUserMessage) {

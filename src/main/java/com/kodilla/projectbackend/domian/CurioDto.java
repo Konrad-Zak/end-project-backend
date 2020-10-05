@@ -23,5 +23,4 @@ public class CurioDto {
         this.year = year;
     }
 
-
 }

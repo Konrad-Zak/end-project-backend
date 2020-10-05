@@ -24,9 +24,9 @@ public class AppUserInfoFacade {
         return appUserInfoMapper.mapToAppUserInfoDto(appUserInfoDbService.getAppUserInfoByAppUserId(appUserId));
     }
 
-    public List<AppUserInfo> getAppUsersInfo() {
+    public List<AppUserInfoDto> getAppUsersInfo() {
         LOGGER.debug("Request: get all appInfoUsers ");
-        return appUserInfoDbService.getAllAppUserInfo();
+        return appUserInfoMapper.mapToAppUserInfoDtoList(appUserInfoDbService.getAllAppUserInfo());
     }
 
     public Boolean createAppUserInfo(AppUserInfoDto appUserInfoDto) {
