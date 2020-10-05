@@ -1,6 +1,7 @@
 package com.kodilla.projectbackend.configuration;
 
 import com.kodilla.projectbackend.observer.CurioClientProblem;
+import com.kodilla.projectbackend.observer.EdamamCientProblem;
 import com.kodilla.projectbackend.observer.SendEmailProcessProblem;
 import com.kodilla.projectbackend.observer.ProblemObserver;
 import lombok.AllArgsConstructor;
@@ -29,5 +30,10 @@ public class CoreConfiguration {
     @Bean
     public SendEmailProcessProblem sendEmailProcessProblem(){
         return new SendEmailProcessProblem(problemObserver);
+    }
+
+    @Bean
+    public EdamamCientProblem edamamCientProblem() {
+        return new EdamamCientProblem(problemObserver);
     }
 }

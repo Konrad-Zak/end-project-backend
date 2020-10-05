@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 
 @Getter
 @AllArgsConstructor
@@ -51,6 +52,22 @@ public class AppUser implements UserDetails{
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        AppUser appUser = (AppUser) object;
+        return Objects.equals(id, appUser.id) &&
+                Objects.equals(username, appUser.username) &&
+                Objects.equals(password, appUser.password) &&
+                Objects.equals(role, appUser.role);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, role);
     }
 
     @Override

@@ -5,23 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CurioDto {
-
-    private Long id;
+public class SearchFoodDto {
     private String text;
-    private Integer year;
-    private LocalDate localDate;
-
-    public CurioDto(String text, Integer year) {
-        this.text = text;
-        this.year = year;
-    }
-
-
+    private List<ParsedDto> parsed;
 }

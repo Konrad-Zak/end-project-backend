@@ -14,7 +14,7 @@ public class AppUserMessageDbService {
 
     private AppUserMessageRepository appUserMessageRepository;
 
-    public List<AppUserMessage> gelAllAppUserMessage(){
+    public List<AppUserMessage> getAllAppUserMessage(){
         return appUserMessageRepository.findAll();
     }
 
@@ -27,7 +27,9 @@ public class AppUserMessageDbService {
     }
 
     public Boolean deleteByLocalDateBefore(LocalDate localDate) {
-        return appUserMessageRepository.deleteByLocalDateBefore(localDate);
+        List<AppUserMessage> appUserMessageList = appUserMessageRepository.findAllByLocalDateBefore(localDate);
+        appUserMessageList.forEach(appUserMessage -> appUserMessageRepository.delete(appUserMessage));
+        return appUserMessageRepository.existsByLocalDateBefore(localDate);
     }
 
 }
