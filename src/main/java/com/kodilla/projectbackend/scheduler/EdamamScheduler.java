@@ -1,10 +1,10 @@
 package com.kodilla.projectbackend.scheduler;
 
 import com.kodilla.projectbackend.configuration.EmailConfiguration;
-import com.kodilla.projectbackend.domian.CurioDto;
 import com.kodilla.projectbackend.domian.Mail;
-import com.kodilla.projectbackend.observer.CurioClientProblem;
-import com.kodilla.projectbackend.service.CurioDbService;
+import com.kodilla.projectbackend.domian.SearchFoodDto;
+import com.kodilla.projectbackend.observer.EdamamCientProblem;
+import com.kodilla.projectbackend.service.EdamamService;
 import com.kodilla.projectbackend.service.MailSenderService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -17,30 +17,25 @@ import java.time.Instant;
 
 @Component
 @AllArgsConstructor
-public class CurioScheduler {
+public class EdamamScheduler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CurioScheduler.class);
-    private static final String SUBJECT = "Check Curio service working";
+    private static final Logger LOGGER = LoggerFactory.getLogger(EdamamScheduler.class);
+    private static final String SUBJECT = "Check Edamam service working";
     private static final String PROBLEM = "Service break down ";
-    private CurioDbService curioDbService;
-    private CurioClientProblem curioClientProblem;
+    private static final String SEARCHED_FOOD = "apple";
+    private EdamamService edamamService;
+    private EdamamCientProblem edamamCientProblem;
     private MailSenderService mailSenderService;
     private EmailConfiguration emailConfiguration;
 
-    @Scheduled(cron = "0 0 0 * * *")
-    public void cleanCurioDb() {
-        LOGGER.info("Clean All Curios DataBase");
-        curioDbService.cleanAllCuriosInDb();
-    }
-
-    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "0 5 * * * *")
     public void checkWorkingService() {
         LOGGER.info(SUBJECT);
-        CurioDto curioDto = curioDbService.getCurioDay();
-        if(curioDto.getText()!=null & curioDto.getYear()!=null) {
-            LOGGER.info("Curio service working ok");
+        SearchFoodDto searchFoodDto = edamamService.getSearchFood(SEARCHED_FOOD);
+        if(searchFoodDto.getParsed()!=null) {
+            LOGGER.info("Edamam service working ok");
         } else {
-            LOGGER.info("Curio service working not ok");
+            LOGGER.info("Edamam service working not ok");
             sendEmailToAdmin();
             saveProblemInDb();
         }
@@ -53,7 +48,7 @@ public class CurioScheduler {
     }
 
     private void saveProblemInDb() {
-        curioClientProblem.addMessage(PROBLEM);
-        curioClientProblem.notifyObservers();
+        edamamCientProblem.addMessage(PROBLEM);
+        edamamCientProblem.notifyObservers();
     }
 }

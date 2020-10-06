@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -29,7 +28,7 @@ public class CurioClient {
                     .queryParam("json")
                     .build().encode().toUri();
             return restTemplate.getForObject(uri, CurioDto.class);
-        } catch (ResourceAccessException ex){
+        } catch (RuntimeException ex){
             LOGGER.error("Problem with External curio system");
             return new CurioDto();
         }
