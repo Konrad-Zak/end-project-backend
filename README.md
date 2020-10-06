@@ -1,6 +1,6 @@
 frontend project link:
 
-    
+            https://github.com/Konrad-Zak/end-project-frontend/tree/0b184b09d836c2e0887d9f2b79a2e5294745367d    
 
 Start-up:
 
@@ -43,12 +43,12 @@ first part run:
     1) First run end-project-backend 
     2) Second run end-project-frontend
     3) go to http://localhost:8080/ or http://localhost:8080/login
-    4) create new user or login in app
+    4) create new user or login in app by use user account
     5) use app
 
 Accounts:
         
-        Admin account:
+        Admin account(for use dedicated endpoints):
         Username: ADMIN 
         PASSWORD: ADMIN
         
