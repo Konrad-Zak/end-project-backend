@@ -40,8 +40,11 @@ external api:
        
 first part run: 
 
-    First run end-project-backend 
-    Second run end-project-frontend
+    1) First run end-project-backend 
+    2) Second run end-project-frontend
+    3) go to http://localhost:8080/ or http://localhost:8080/login
+    4) create new user or login in app
+    5) use app
 
 Accounts:
         
