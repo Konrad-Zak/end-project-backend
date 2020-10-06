@@ -42,7 +42,6 @@ public class AppProblemDbServiceTest {
         assertTrue(appProblemResult.isPresent());
         assertEquals(appProblem.getId(),appProblemResult.get().getId());
         assertEquals(appProblem.getText(),appProblemResult.get().getText());
-        assertEquals(appProblem.getTimestamp(),appProblemResult.get().getTimestamp());
         //CleanUp
         appProblemRepository.delete(appProblem);
     }
@@ -62,10 +61,8 @@ public class AppProblemDbServiceTest {
         assertEquals(2, appProblemList.size());
         assertEquals(appProblemOne.getId(),appProblemList.get(0).getId());
         assertEquals(appProblemOne.getText(),appProblemList.get(0).getText());
-        assertEquals(appProblemOne.getTimestamp(),appProblemOne.getTimestamp());
         assertEquals(appProblemTwo.getId(),appProblemList.get(1).getId());
         assertEquals(appProblemTwo.getText(),appProblemList.get(1).getText());
-        assertEquals(appProblemTwo.getTimestamp(),appProblemList.get(1).getTimestamp());
         //CleanUp
         appProblemRepository.deleteAll();
     }
