@@ -56,7 +56,7 @@ public class AppUserFacade {
                 throw new UserNotFoundException();
             }
         } catch (RuntimeException ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -83,7 +83,7 @@ public class AppUserFacade {
                 LOGGER.info("Request: delete user with id: " + appUserId + " - not possible");
             }
         } catch (RuntimeException ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 

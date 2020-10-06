@@ -50,28 +50,17 @@ public class AppUserInfoDbServiceTest {
         AppUserInfoDto appUserInfoDtoTwo = new AppUserInfoDto("John2", "john2@wp.com",appUserTwo);
         AppUserInfo appUserInfoOne = appUserInfoMapper.mapToAppUserInfo(appUserInfoDtoOne);
         AppUserInfo appUserInfoTwo = appUserInfoMapper.mapToAppUserInfo(appUserInfoDtoTwo);
+        List<AppUserInfo> appUserInfoListBefore = appUserInfoRepository.findAll();
         appUserRepository.save(appUserOne);
         appUserRepository.save(appUserTwo);
         appUserInfoRepository.save(appUserInfoOne);
         appUserInfoRepository.save(appUserInfoTwo);
         //When
-        List<AppUserInfo> appUserInfoList = appUserInfoDbService.getAllAppUserInfo();
+        List<AppUserInfo> appUserInfoListAfter = appUserInfoDbService.getAllAppUserInfo();
         //Then
-        assertEquals(2,appUserInfoList.size());
-        assertEquals(appUserInfoOne.getId(),appUserInfoList.get(0).getId());
-        assertEquals(appUserInfoOne.getFirstName(),appUserInfoList.get(0).getFirstName());
-        assertEquals(appUserInfoOne.getEmail(),appUserInfoList.get(0).getEmail());
-        assertEquals(appUserOne.getId(),appUserInfoList.get(0).getAppUser().getId());
-        assertEquals(appUserOne.getUsername(),appUserInfoList.get(0).getAppUser().getUsername());
-        assertEquals(appUserOne.getPassword(),appUserInfoList.get(0).getAppUser().getPassword());
-        assertEquals(appUserOne.getRole(), appUserInfoList.get(0).getAppUser().getRole());
-        assertEquals(appUserInfoTwo.getId(),appUserInfoList.get(1).getId());
-        assertEquals(appUserInfoTwo.getFirstName(),appUserInfoList.get(1).getFirstName());
-        assertEquals(appUserInfoTwo.getEmail(),appUserInfoList.get(1).getEmail());
-        assertEquals(appUserTwo.getId(),appUserInfoList.get(1).getAppUser().getId());
-        assertEquals(appUserTwo.getUsername(),appUserInfoList.get(1).getAppUser().getUsername());
-        assertEquals(appUserTwo.getPassword(),appUserInfoList.get(1).getAppUser().getPassword());
-        assertEquals(appUserTwo.getRole(), appUserInfoList.get(1).getAppUser().getRole());
+        assertTrue(appUserInfoListAfter.size()>appUserInfoListBefore.size());
+        assertTrue(appUserInfoListAfter.contains(appUserInfoTwo));
+        assertTrue(appUserInfoListAfter.contains(appUserInfoOne));
         //CleanUp
         appUserInfoRepository.delete(appUserInfoOne);
         appUserInfoRepository.delete(appUserInfoTwo);

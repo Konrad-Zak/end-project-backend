@@ -48,27 +48,35 @@ public class CalorieInfoFacade {
     }
 
     public CalorieInfoDto getAppCalorieInfo(Long appUserId) {
-        return calorieInfoMapper.simpleMapToCalorieInfoDto(calorieInfoDbService.getCalorieInfoByAppUserId(appUserId));
+        try{
+            return calorieInfoMapper.simpleMapToCalorieInfoDto(calorieInfoDbService.getCalorieInfoByAppUserId(appUserId));
+        } catch (RuntimeException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
     public void updateAppCalorieInfo(Long appUserId, Double weight, Double fitness) {
-        CalorieInfoDto calorieInfoDto = calorieInfoMapper
-                .mapToCalorieInfoDto(calorieInfoDbService.getCalorieInfoByAppUserId(appUserId));
+        try {
+            CalorieInfoDto calorieInfoDto = calorieInfoMapper
+                    .mapToCalorieInfoDto(calorieInfoDbService.getCalorieInfoByAppUserId(appUserId));
 
-        AppUserCalorieDto appUserCalorieDto = calorieCalculateService.calculateCalorie(weight,fitness);
-        appUserCalorieDto.setId(calorieInfoDto.getAppUserCalorie().getId());
-        AppUserCalorie appUserCalorie = appUserCalorieMapper.mapToAppUserCalorie(appUserCalorieDto);
-        saveAppUserCalorie(appUserCalorie);
+            AppUserCalorieDto appUserCalorieDto = calorieCalculateService.calculateCalorie(weight,fitness);
+            appUserCalorieDto.setId(calorieInfoDto.getAppUserCalorie().getId());
+            AppUserCalorie appUserCalorie = appUserCalorieMapper.mapToAppUserCalorie(appUserCalorieDto);
+            saveAppUserCalorie(appUserCalorie);
 
-        calorieInfoDto.setNewValues(weight,fitness);
-        saveAppCalorieInfo(calorieInfoDto);
+            calorieInfoDto.setNewValues(weight,fitness);
+            saveAppCalorieInfo(calorieInfoDto);
+        } catch (RuntimeException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     public Boolean checkExistByAppUserId(Long appUserId) {
         try{
             return calorieInfoDbService.checkExistByAppUserId(appUserId);
         } catch (RuntimeException ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 

@@ -26,7 +26,7 @@ public class AppUserInfoFacade {
             LOGGER.debug("Request: get appUserInfo of appUserId: " + appUserId);
             return appUserInfoMapper.mapToAppUserInfoDto(appUserInfoDbService.getAppUserInfoByAppUserId(appUserId));
         } catch (RuntimeException ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 
