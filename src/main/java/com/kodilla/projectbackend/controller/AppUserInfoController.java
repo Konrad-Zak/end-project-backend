@@ -1,13 +1,11 @@
 package com.kodilla.projectbackend.controller;
 
-import com.kodilla.projectbackend.domian.AppUserInfo;
 import com.kodilla.projectbackend.domian.AppUserInfoDto;
 import com.kodilla.projectbackend.facade.AppUserInfoFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/v1/appInfoUsers")

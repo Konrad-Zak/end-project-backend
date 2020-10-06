@@ -1,7 +1,6 @@
 package com.kodilla.projectbackend.facade;
 
 import com.kodilla.projectbackend.domian.*;
-import com.kodilla.projectbackend.exception.UserIdException;
 import com.kodilla.projectbackend.mapper.AppUserCalorieMapper;
 import com.kodilla.projectbackend.mapper.CalorieInfoMapper;
 import com.kodilla.projectbackend.service.AppUserCalorieDbService;

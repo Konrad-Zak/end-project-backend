@@ -5,7 +5,6 @@ import com.kodilla.projectbackend.domian.AppProblemDto;
 import com.kodilla.projectbackend.mapper.AppProblemMapper;
 import com.kodilla.projectbackend.service.AppProblemDbService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
