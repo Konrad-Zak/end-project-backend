@@ -7,7 +7,9 @@ import com.kodilla.projectbackend.service.AppUserInfoDbService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -20,24 +22,36 @@ public class AppUserInfoFacade {
     private AppUserInfoMapper appUserInfoMapper;
 
     public AppUserInfoDto getAppUserInfoByAppUserId(Long appUserId) {
-        LOGGER.debug("Request: get appUserInfo of appUserId: " + appUserId);
-        return appUserInfoMapper.mapToAppUserInfoDto(appUserInfoDbService.getAppUserInfoByAppUserId(appUserId));
+        try {
+            LOGGER.debug("Request: get appUserInfo of appUserId: " + appUserId);
+            return appUserInfoMapper.mapToAppUserInfoDto(appUserInfoDbService.getAppUserInfoByAppUserId(appUserId));
+        } catch (RuntimeException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
-    public List<AppUserInfo> getAppUsersInfo() {
+    public List<AppUserInfoDto> getAppUsersInfo() {
         LOGGER.debug("Request: get all appInfoUsers ");
-        return appUserInfoDbService.getAllAppUserInfo();
+        return appUserInfoMapper.mapToAppUserInfoDtoList(appUserInfoDbService.getAllAppUserInfo());
     }
 
     public Boolean createAppUserInfo(AppUserInfoDto appUserInfoDto) {
-        AppUserInfo appUserInfo = appUserInfoMapper.mapToAppUserInfo(appUserInfoDto);
-        appUserInfoDbService.saveAppUserInfo(appUserInfo);
-        LOGGER.info("Request: create new appUserInfo ");
-        return appUserInfoDbService.checkAppUserInfoExist(appUserInfo.getId());
+        try{
+            AppUserInfo appUserInfo = appUserInfoMapper.mapToAppUserInfo(appUserInfoDto);
+            appUserInfoDbService.saveAppUserInfo(appUserInfo);
+            LOGGER.info("Request: create new appUserInfo ");
+            return appUserInfoDbService.checkAppUserInfoExist(appUserInfo.getId());
+        } catch (RuntimeException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     public void updateAppUserInfo(AppUserInfoDto appUserInfoDto) {
-        LOGGER.info("Request: update appUserInfo of id: " + appUserInfoDto.getId());
-        appUserInfoDbService.saveAppUserInfo(appUserInfoMapper.mapToAppUserInfo(appUserInfoDto));
+        try {
+            LOGGER.info("Request: update appUserInfo of id: " + appUserInfoDto.getId());
+            appUserInfoDbService.saveAppUserInfo(appUserInfoMapper.mapToAppUserInfo(appUserInfoDto));
+        } catch (RuntimeException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 }

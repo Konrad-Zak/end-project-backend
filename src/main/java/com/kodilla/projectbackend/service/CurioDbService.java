@@ -3,17 +3,12 @@ package com.kodilla.projectbackend.service;
 import com.kodilla.projectbackend.client.CurioClient;
 import com.kodilla.projectbackend.domian.Curio;
 import com.kodilla.projectbackend.domian.CurioDto;
-import com.kodilla.projectbackend.mapper.CurioMapper;
 import com.kodilla.projectbackend.repository.CurioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @AllArgsConstructor

@@ -1,5 +1,6 @@
 package com.kodilla.projectbackend.client;
 
+import com.kodilla.projectbackend.configuration.ExternalApiConfiguration;
 import com.kodilla.projectbackend.domian.SearchFoodDto;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -16,13 +17,14 @@ public class EdamamClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EdamamClient.class);
     private RestTemplate restTemplate;
+    private ExternalApiConfiguration externalApiConfiguration;
 
     public SearchFoodDto getSearchFood(String foodName) {
         try {
             LOGGER.debug("Send request to external edamam system");
-            URI uri = UriComponentsBuilder.fromHttpUrl("https://api.edamam.com/api/food-database/v2/parser")
-                    .queryParam("app_id","3e93a065")
-                    .queryParam("app_key","882438b570964258465ac7715c9c41cd" )
+            URI uri = UriComponentsBuilder.fromHttpUrl(externalApiConfiguration.getEdamamApiEndpoint())
+                    .queryParam("app_id",externalApiConfiguration.getEdamamAppId())
+                    .queryParam("app_key",externalApiConfiguration.getEdamamAppKey())
                     .queryParam("ingr",foodName)
                     .build().encode().toUri();
             return restTemplate.getForObject(uri, SearchFoodDto.class);

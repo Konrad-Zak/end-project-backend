@@ -23,7 +23,7 @@ public class AppUserInfoController {
     }
 
     @GetMapping(value = "admin/users")
-    public List<AppUserInfo> getAppUsersInfo() {
+    public List<AppUserInfoDto> getAppUsersInfo() {
         return appUserInfoFacade.getAppUsersInfo();
     }
 

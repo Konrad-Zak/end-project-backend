@@ -11,7 +11,9 @@ import com.kodilla.projectbackend.service.CalorieInfoDbService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 @Component
 @AllArgsConstructor
@@ -27,49 +29,73 @@ public class CalorieInfoFacade {
 
 
     public Boolean createAppCalorieInfo(Long appUserId, Double weight, Double fitness) {
-        if (!calorieInfoDbService.checkExistByAppUserId(appUserId)){
-            AppUserCalorie appUserCalorie = appUserCalorieMapper
-                    .mapToAppUserCalorie(calorieCalculateService.calculateCalorie(weight,fitness));
-            saveAppUserCalorie(appUserCalorie);
+       try {
+           if (!calorieInfoDbService.checkExistByAppUserId(appUserId)){
+               AppUserCalorie appUserCalorie = appUserCalorieMapper
+                       .mapToAppUserCalorie(calorieCalculateService.calculateCalorie(weight,fitness));
+               saveAppUserCalorie(appUserCalorie);
 
-            AppUser appUser = appUserDbService.getAppUserById(appUserId);
+               AppUser appUser = appUserDbService.getAppUserById(appUserId);
 
-            saveAppCalorieInfo(new CalorieInfoDto(weight,fitness,appUserCalorie,appUser));
-            return calorieInfoDbService.checkExistByAppUserId(appUserId);
-        } else {
-            throw new UserIdException();
-        }
+               saveAppCalorieInfo(new CalorieInfoDto(weight,fitness,appUserCalorie,appUser));
+               return calorieInfoDbService.checkExistByAppUserId(appUserId);
+           } else {
+               throw new UserIdException();
+           }
+       } catch (RuntimeException ex) {
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+       }
     }
 
     public CalorieInfoDto getAppCalorieInfo(Long appUserId) {
-        return calorieInfoMapper.simpleMapToCalorieInfoDto(calorieInfoDbService.getCalorieInfoByAppUserId(appUserId));
+        try{
+            return calorieInfoMapper.simpleMapToCalorieInfoDto(calorieInfoDbService.getCalorieInfoByAppUserId(appUserId));
+        } catch (RuntimeException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
     public void updateAppCalorieInfo(Long appUserId, Double weight, Double fitness) {
-        CalorieInfoDto calorieInfoDto = calorieInfoMapper
-                .mapToCalorieInfoDto(calorieInfoDbService.getCalorieInfoByAppUserId(appUserId));
+        try {
+            CalorieInfoDto calorieInfoDto = calorieInfoMapper
+                    .mapToCalorieInfoDto(calorieInfoDbService.getCalorieInfoByAppUserId(appUserId));
 
-        AppUserCalorieDto appUserCalorieDto = calorieCalculateService.calculateCalorie(weight,fitness);
-        appUserCalorieDto.setId(calorieInfoDto.getAppUserCalorie().getId());
-        AppUserCalorie appUserCalorie = appUserCalorieMapper.mapToAppUserCalorie(appUserCalorieDto);
-        saveAppUserCalorie(appUserCalorie);
+            AppUserCalorieDto appUserCalorieDto = calorieCalculateService.calculateCalorie(weight,fitness);
+            appUserCalorieDto.setId(calorieInfoDto.getAppUserCalorie().getId());
+            AppUserCalorie appUserCalorie = appUserCalorieMapper.mapToAppUserCalorie(appUserCalorieDto);
+            saveAppUserCalorie(appUserCalorie);
 
-        calorieInfoDto.setNewValues(weight,fitness);
-        saveAppCalorieInfo(calorieInfoDto);
+            calorieInfoDto.setNewValues(weight,fitness);
+            saveAppCalorieInfo(calorieInfoDto);
+        } catch (RuntimeException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     public Boolean checkExistByAppUserId(Long appUserId) {
-        return calorieInfoDbService.checkExistByAppUserId(appUserId);
+        try{
+            return calorieInfoDbService.checkExistByAppUserId(appUserId);
+        } catch (RuntimeException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
     private void saveAppUserCalorie(AppUserCalorie appUserCalorie) {
-        LOGGER.debug("Request: create new appUserCalorie of id: " + appUserCalorie.getId());
-        appUserCalorieDbService.createAppUserCalorie(appUserCalorie);
+        try {
+            LOGGER.debug("Request: create new appUserCalorie of id: " + appUserCalorie.getId());
+            appUserCalorieDbService.createAppUserCalorie(appUserCalorie);
+        } catch (RuntimeException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     private void saveAppCalorieInfo(CalorieInfoDto calorieInfoDto) {
-        LOGGER.debug("Request: create new appUserCalorie for appUserId: " + calorieInfoDto.getAppUser().getId());
-        calorieInfoDbService.saveCalorieInfo(calorieInfoMapper.mapToCalorieInfo(calorieInfoDto));
+        try {
+            LOGGER.debug("Request: create new appUserCalorie for appUserId: " + calorieInfoDto.getAppUser().getId());
+            calorieInfoDbService.saveCalorieInfo(calorieInfoMapper.mapToCalorieInfo(calorieInfoDto));
+        } catch (RuntimeException ex){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

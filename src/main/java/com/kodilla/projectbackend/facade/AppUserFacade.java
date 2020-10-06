@@ -11,7 +11,9 @@ import com.kodilla.projectbackend.service.CalorieInfoDbService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -38,15 +40,23 @@ public class AppUserFacade {
     }
 
     public void updateAppUser(AppUserDto appUserDto) {
-        LOGGER.info("Request: update user: " + appUserDto.getUsername());
-        appUserDbService.saveAppUser(appUserMapper.mapToAppUser(appUserDto));
+        try {
+            LOGGER.info("Request: update user: " + appUserDto.getUsername());
+            appUserDbService.saveAppUser(appUserMapper.mapToAppUser(appUserDto));
+        } catch (RuntimeException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     public void deleteAppUser(Long appUserId) {
-        if(appUserDbService.existByAppUserId(appUserId)){
-            deleteProcess(appUserId);
-        } else {
-            throw new UserNotFoundException();
+        try{
+            if(appUserDbService.existByAppUserId(appUserId)){
+                deleteProcess(appUserId);
+            } else {
+                throw new UserNotFoundException();
+            }
+        } catch (RuntimeException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -61,15 +71,19 @@ public class AppUserFacade {
     }
 
     private void deleteProcess(Long appUserId) {
-        AppUserInfo appUserInfo = appUserInfoDbService.getAppUserInfoByAppUserId(appUserId);
-        CalorieInfo calorieInfo = calorieInfoDbService.getCalorieInfoByAppUserId(appUserId);
-        Boolean resultCalorieInfoDelete = calorieInfoDbService.deleteByCalorieInfoId(calorieInfo.getId());
-        Boolean resultAppUserDelete = appUserDbService.deleteAppUser(appUserId);
-        Boolean resultAppUserInfoDelete = appUserInfoDbService.deleteByAppUserId(appUserInfo.getId());
-        if(!resultAppUserInfoDelete && !resultAppUserDelete && !resultCalorieInfoDelete){
-            LOGGER.info("Request: Complete delete user with id: " + appUserId);
-        } else {
-            LOGGER.info("Request: delete user with id: " + appUserId + " - not possible");
+        try{
+            AppUserInfo appUserInfo = appUserInfoDbService.getAppUserInfoByAppUserId(appUserId);
+            CalorieInfo calorieInfo = calorieInfoDbService.getCalorieInfoByAppUserId(appUserId);
+            Boolean resultCalorieInfoDelete = calorieInfoDbService.deleteByCalorieInfoId(calorieInfo.getId());
+            Boolean resultAppUserDelete = appUserDbService.deleteAppUser(appUserId);
+            Boolean resultAppUserInfoDelete = appUserInfoDbService.deleteByAppUserId(appUserInfo.getId());
+            if(!resultAppUserInfoDelete && !resultAppUserDelete && !resultCalorieInfoDelete){
+                LOGGER.info("Request: Complete delete user with id: " + appUserId);
+            } else {
+                LOGGER.info("Request: delete user with id: " + appUserId + " - not possible");
+            }
+        } catch (RuntimeException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 

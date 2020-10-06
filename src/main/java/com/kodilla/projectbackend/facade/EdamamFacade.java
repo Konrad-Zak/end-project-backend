@@ -17,7 +17,7 @@ public class EdamamFacade {
 
     public SearchFoodDto getSearchFood(String foodName) {
         SearchFoodDto searchFoodDto = edamamService.getSearchFood(foodName);
-        if(searchFoodDto.getText()!=null){
+        if(searchFoodDto.getParsed()!=null){
             return searchFoodDto;
         } else {
             reportProblem();

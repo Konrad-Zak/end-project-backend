@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Getter
 @AllArgsConstructor
@@ -26,4 +27,19 @@ public class AppUserInfo {
     @JoinColumn(name = "APP_USER_ID")
     private AppUser appUser;
 
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        AppUserInfo that = (AppUserInfo) object;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(firstName, that.firstName) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(appUser, that.appUser);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, email, appUser);
+    }
 }
