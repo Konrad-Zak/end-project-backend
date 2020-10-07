@@ -4,6 +4,8 @@ frontend project link:
 
 Start-up:
 
+            The application requires an internet connection
+
 DB config:
 
     Create Db in MySQL(config in application.properties, as in the kodilla course ):
