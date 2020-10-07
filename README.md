@@ -1,6 +1,6 @@
 frontend project link:
 
-            https://github.com/Konrad-Zak/end-project-frontend/tree/0c3401bd2260f341ef4d6a5287f8123c2c354820  
+            https://github.com/Konrad-Zak/end-project-frontend/tree/c467c39672e18ead2ec29411df5371838b9181f8  
 
 Start-up:
 
